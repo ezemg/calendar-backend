@@ -22,11 +22,12 @@ const validarJWT = async (req = request, res = response, next) => {
     req.name = name;
   } catch (error) {
     console.log(error);
-    res.status(401).json({
+    return res.status(401).json({
       ok: false,
       msg: 'Token no valido',
     });
   }
+
   next();
 };
 

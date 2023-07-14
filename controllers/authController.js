@@ -81,15 +81,22 @@ const loginUsuario = async (req, res = response) => {
 
 const revalidarToken = async (req, res) => {
   const { uid, name } = req;
+  try {
+    const token = await generarJWT(uid, name);
+
+    res.json({
+      ok: true,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      ok: false,
+      msg: 'hable con el administrador',
+    });
+  }
 
   // Generar nuevo JWT
-
-  const token = await generarJWT(uid, name);
-
-  res.json({
-    ok: true,
-    token,
-  });
 };
 
 module.exports = {

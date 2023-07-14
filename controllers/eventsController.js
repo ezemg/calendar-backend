@@ -2,12 +2,20 @@ const { response } = require('express');
 const Evento = require('../models/Evento.js');
 
 const getEventos = async (req, res = response) => {
-  const eventos = await Evento.find().populate('user', 'name');
+  try {
+    const eventos = await Evento.find().populate('user', 'name');
 
-  res.status(200).json({
-    ok: true,
-    eventos,
-  });
+    return res.status(200).json({
+      ok: true,
+      eventos,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      msg: 'Hable con el administrador',
+    });
+  }
 };
 
 const crearEvento = async (req, res = response) => {
